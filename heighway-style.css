@@ -1,0 +1,117 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: sans-serif;
+  background: #f5f5f5;
+  color: #1a1a1a;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ─────────────────────────── */
+header {
+  background: #fff;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding: 1.25rem 2rem;
+}
+.header-inner { max-width: 1000px; margin: 0 auto; }
+.eyebrow {
+  font-size: 10px; letter-spacing: .16em; text-transform: uppercase;
+  color: #7F77DD; display: block; margin-bottom: 3px; font-family: monospace;
+}
+h1 { font-size: 28px; font-weight: 300; letter-spacing: -.02em; color: #111; }
+.subtitle { font-size: 12px; color: #999; margin-top: 3px; font-family: monospace; }
+
+/* ── Main ───────────────────────────── */
+main {
+  flex: 1; max-width: 1000px; width: 100%;
+  margin: 0 auto; padding: 1.5rem;
+  display: flex; flex-direction: column; gap: 14px;
+}
+
+/* ── Tabs ───────────────────────────── */
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.tab {
+  font-size: 12px; font-family: monospace;
+  padding: 6px 18px;
+  border: 0.5px solid rgba(0,0,0,0.2);
+  border-radius: 20px;
+  background: transparent; color: #666;
+  cursor: pointer; transition: all .15s;
+}
+.tab:hover { border-color: #7F77DD; color: #7F77DD; }
+.tab.active {
+  background: #7F77DD; color: #fff;
+  border-color: #7F77DD;
+}
+
+/* ── Controls ───────────────────────── */
+.controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: 5px; min-width: 100px; flex: 1; }
+.field label {
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: #666;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.fv { font-family: monospace; color: #7F77DD; font-size: 12px; text-transform: none; letter-spacing: 0; }
+.sel-wrap { position: relative; }
+.sel-wrap select {
+  width: 100%; appearance: none; height: 34px; font-size: 13px;
+  padding: 0 28px 0 10px;
+  border: 0.5px solid rgba(0,0,0,0.2); border-radius: 8px;
+  background: #fff; color: #1a1a1a; cursor: pointer; outline: none;
+}
+.sel-wrap select:focus { border-color: #7F77DD; }
+.ch {
+  position: absolute; right: 9px; top: 50%; transform: translateY(-50%);
+  color: #999; pointer-events: none; font-size: 12px;
+}
+input[type="range"] { width: 100%; height: 4px; accent-color: #7F77DD; cursor: pointer; }
+.hidden { display: none; }
+
+/* ── Canvas ─────────────────────────── */
+.canvas-box {
+  width: 100%; background: #0d0f14;
+  border: 0.5px solid rgba(0,0,0,0.18);
+  border-radius: 14px; overflow: hidden;
+}
+.canvas-box svg { display: block; width: 100%; height: auto; }
+
+/* ── Footer ─────────────────────────── */
+.footer {
+  display: flex; justify-content: space-between;
+  align-items: center; flex-wrap: wrap; gap: 10px;
+}
+.seg-count { font-family: monospace; font-size: 11px; color: #aaa; }
+button {
+  font-size: 12px; font-family: monospace; padding: 7px 18px;
+  border: 0.5px solid rgba(0,0,0,0.2); border-radius: 8px;
+  background: transparent; color: #1a1a1a; cursor: pointer;
+  white-space: nowrap; transition: all .15s;
+}
+button:not(.tab):hover { background: #f0f0f0; border-color: #7F77DD; color: #7F77DD; }
+button:active { transform: scale(0.97); }
+
+/* ── Info cards ─────────────────────── */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+}
+.ic {
+  background: #fff; border: 0.5px solid rgba(0,0,0,0.12);
+  border-top: 2px solid #7F77DD; border-radius: 10px;
+  padding: 14px; display: flex; flex-direction: column; gap: 8px;
+}
+.ic h3 { font-size: 13px; font-weight: 500; color: #222; }
+.ic p, .ic li { font-size: 12px; color: #555; line-height: 1.55; }
+.ic ul { padding-left: 16px; }
+.ic code {
+  font-family: monospace; font-size: 11px;
+  background: #f3f0ff; color: #7F77DD; padding: 1px 5px; border-radius: 4px;
+}
+
+@media (max-width: 600px) {
+  .controls { flex-direction: column; }
+  .field { width: 100%; flex: none; }
+}

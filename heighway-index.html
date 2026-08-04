@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Heighway Dragon — Tiling & Boundary</title>
+  <link rel="stylesheet" href="heighway-style.css"/>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="eyebrow">Fractal Curve Explorer</span>
+    <h1>Heighway Dragon</h1>
+    <p class="subtitle">Tiling · Boundary · Paper Fold · L-System</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- Mode tabs -->
+  <div class="tabs">
+    <button class="tab active" data-mode="tiling">Tiling</button>
+    <button class="tab" data-mode="boundary">Boundary</button>
+    <button class="tab" data-mode="paperfold">Paper Fold</button>
+    <button class="tab" data-mode="lsystem">L-System</button>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls" id="controls">
+
+    <div class="field" id="ctrl-depth">
+      <label for="depth">Iterations <span class="fv" id="dv">10</span></label>
+      <input type="range" id="depth" min="1" max="16" step="1" value="10"/>
+    </div>
+
+    <div class="field" id="ctrl-copies">
+      <label for="copies">Copies (tiling)</label>
+      <div class="sel-wrap">
+        <select id="copies">
+          <option value="1">1 — single dragon</option>
+          <option value="2">2 — pair (180°)</option>
+          <option value="4" selected>4 — full tile</option>
+        </select>
+        <span class="ch">▾</span>
+      </div>
+    </div>
+
+    <div class="field" id="ctrl-bcomp">
+      <label for="bcomp">Boundary component</label>
+      <div class="sel-wrap">
+        <select id="bcomp">
+          <option value="all" selected>All 4 (RBORG)</option>
+          <option value="red">Red only</option>
+          <option value="blue">Blue only</option>
+          <option value="orange">Orange only</option>
+          <option value="green">Green only</option>
+        </select>
+        <span class="ch">▾</span>
+      </div>
+    </div>
+
+    <div class="field" id="ctrl-scheme">
+      <label for="scheme">Color</label>
+      <div class="sel-wrap">
+        <select id="scheme">
+          <option value="violet">Violet</option>
+          <option value="teal">Teal</option>
+          <option value="coral">Coral</option>
+          <option value="blue">Blue</option>
+          <option value="amber">Amber</option>
+        </select>
+        <span class="ch">▾</span>
+      </div>
+    </div>
+
+    <div class="field" id="ctrl-sw">
+      <label for="sw">Stroke <span class="fv" id="swv">1</span></label>
+      <input type="range" id="sw" min="1" max="4" step="1" value="1"/>
+    </div>
+
+    <div class="field" id="ctrl-rainbow">
+      <label for="rainbow">Rainbow</label>
+      <div class="sel-wrap">
+        <select id="rainbow">
+          <option value="off">Off</option>
+          <option value="on">On</option>
+        </select>
+        <span class="ch">▾</span>
+      </div>
+    </div>
+
+    <div class="field" id="ctrl-grid">
+      <label for="showgrid">Lattice grid</label>
+      <div class="sel-wrap">
+        <select id="showgrid">
+          <option value="off">Off</option>
+          <option value="on">On</option>
+        </select>
+        <span class="ch">▾</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Canvas -->
+  <div class="canvas-box">
+    <div id="wrap"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <span class="seg-count" id="sc"></span>
+    <button onclick="downloadSVG()">↓ Download SVG</button>
+  </div>
+
+  <!-- Info cards (swap by mode) -->
+  <div class="info-grid" id="info-tiling">
+    <div class="ic">
+      <h3>Tiling principle</h3>
+      <p>Four copies of the dragon curve, each rotated by a multiple of 90°, nestle together perfectly — tail to tail — to tile the entire plane. Harter was the first to demonstrate this in the 1960s.</p>
+    </div>
+    <div class="ic">
+      <h3>Rotational symmetry</h3>
+      <p>The four-dragon group has 90° rotational symmetry. Each dragon is placed at 0°, 90°, 180°, and 270°, all sharing the same origin point (the tail). The combined image can then tile the plane by translation.</p>
+    </div>
+    <div class="ic">
+      <h3>Lattice grid</h3>
+      <p>For iteration <em>n</em>, the corners of the dragon fall on a square lattice of size (1/√2)<sup>n</sup>. At even iterations the grid aligns with the axes; at odd iterations it is rotated 45°.</p>
+    </div>
+    <div class="ic">
+      <h3>Space-filling limit</h3>
+      <p>As iterations grow, the four rotated copies cover ever more lattice points. In the limit, the tiling is exact and the dragon has area ½ (for unit initial segment), confirmed by the boundary area derivation.</p>
+    </div>
+  </div>
+
+  <div class="info-grid hidden" id="info-boundary">
+    <div class="ic">
+      <h3>Fractal boundary</h3>
+      <p>The boundary of the Heighway dragon is itself a fractal with Hausdorff dimension ≈ <strong>1.523627</strong>. It is the attractor of a 3-function IFS for each of four colored sub-boundaries.</p>
+    </div>
+    <div class="ic">
+      <h3>Four components</h3>
+      <p>The boundary decomposes into four self-similar pieces — <span style="color:#ef4444">Red</span>, <span style="color:#3b82f6">Blue</span>, <span style="color:#f97316">Orange</span>, <span style="color:#22c55e">Green</span> — each generated by 3 affine maps. Each piece is a scaled and rotated copy of the others.</p>
+    </div>
+    <div class="ic">
+      <h3>Area derivation</h3>
+      <p>From the Level 0 rectangle (area 4a²), each boundary iteration adds a square of side a·(1/√2)<sup>n</sup>. The infinite sum gives total area = 5a² = b²/2 for initial segment length b.</p>
+    </div>
+    <div class="ic">
+      <h3>Dimension formula</h3>
+      <p>The dimension d satisfies x³ − x − 1 = 0 (a cubic from the 3-part IFS). The solution gives d = −ln(x)/ln(√2) ≈ 1.523627, larger than 1 (a curve) but less than 2 (a filled region).</p>
+    </div>
+  </div>
+
+  <div class="info-grid hidden" id="info-paperfold">
+    <div class="ic">
+      <h3>Paper fold method</h3>
+      <p>Fold a long narrow strip of paper in half n times, always in the same direction. Open flat so each fold is a right angle and view from the edge — this is the dragon of order n.</p>
+    </div>
+    <div class="ic">
+      <h3>Turn sequence</h3>
+      <p>Each crease is labeled R (right turn) or L (left turn). Order 4: <code>RRLRRLLRRRLLRLL</code>. The sequence is generated by: copy, append R, append reversed-inverted copy.</p>
+    </div>
+    <div class="ic">
+      <h3>Non-self-intersection</h3>
+      <p>The paper fold dragon never crosses itself. This was proven by Davis and Knuth (1970) and follows from the fact that the IFS maps produce non-overlapping copies.</p>
+    </div>
+    <div class="ic">
+      <h3>Historical origin</h3>
+      <p>John Heighway discovered this construction in 1966. William Harter named it the "dragon." It was described by Martin Gardner in <em>Scientific American</em> in 1967 and each chapter of Crichton's <em>Jurassic Park</em> shows an iteration.</p>
+    </div>
+  </div>
+
+  <div class="info-grid hidden" id="info-lsystem">
+    <div class="ic">
+      <h3>L-system grammar</h3>
+      <p>Angle: 45° · Axiom: <code>FX</code><br/>Rules: <code>F → Z</code>, <code>X → +FX−−FY+</code>, <code>Y → −FX++FY−</code></p>
+      <p><code>F</code> draws forward, <code>+</code> turns left 45°, <code>−</code> turns right 45°, <code>Z</code> is a no-draw step.</p>
+    </div>
+    <div class="ic">
+      <h3>Symbol growth</h3>
+      <p>The string length doubles each iteration (minus constant overhead). At iteration n the string has roughly 2ⁿ draw commands, producing 2ⁿ−1 segments — one for each crease in the paper fold construction.</p>
+    </div>
+    <div class="ic">
+      <h3>Equivalence</h3>
+      <p>The L-system and paper fold sequences produce identical paths. The X/Y symbols encode the alternating left/right placement rule, which is equivalent to the recursive inversion in the paper fold turn sequence.</p>
+    </div>
+    <div class="ic">
+      <h3>Similarity dimension</h3>
+      <p>The IFS has 2 maps each scaling by 1/√2. Solving 2·(1/√2)<sup>d</sup> = 1 gives d = log(2)/log(√2) = <strong>2</strong>. The dragon is space-filling in the limit — its interior is non-empty.</p>
+    </div>
+  </div>
+
+</main>
+
+<script src="heighway-script.js"></script>
+</body>
+</html>
