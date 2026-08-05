@@ -2,7 +2,7 @@
 
 An interactive, browser-based visualization of the **Heighway Dragon Curve** — a classic space-filling fractal — with four distinct rendering modes: Tiling, Boundary, Paper Fold, and L-System.
 
-[Live Demo](https://luishvn440-hub.github.io/Heighway-Dragon-Tiling/) (GitHub Pages)
+[Live Demo]((https://luishvn440-hub.github.io/Heighway-Dragon-Tiling/heighway-index.html)) (GitHub Pages)
 
 ---
 
